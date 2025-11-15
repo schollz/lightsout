@@ -7,6 +7,7 @@ function GGrid:new(args)
   local args=args==nil and {} or args
 
   m.grid_on=args.grid_on==nil and true or args.grid_on
+  m.callback=args.callback
 
   -- initiate the grid
   m.g=grid.connect()
@@ -32,6 +33,7 @@ function GGrid:new(args)
       m.playing[i][j]=0
     end
   end
+
 
 
   -- keep track of pressed buttons
@@ -64,6 +66,9 @@ function GGrid:key_press(row,col,on)
   end
   if on then
   	self:toggle_key(row,col)
+  end
+  if self.callback and on then
+    self.callback(row,col,self.lightsout[row][col])
   end
 end
 

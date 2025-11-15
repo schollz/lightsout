@@ -14,8 +14,10 @@ lattice=require("lattice")
 
 engine.name="PolyPerc"
 
+sequencer_active = false
+
 function init()
-  grid_=grid__:new()
+  grid_=grid__:new({callback=grid_note_on})
 
   local redrawer=metro.init()
   redrawer.time=1/15
@@ -55,22 +57,25 @@ function init()
     local step=0
     sequencer:new_pattern({
       action=function(t)
-        step=step+1
-        play_note(i,step)
+        if sequencer_active then 
+          step=step+1
+          play_note(i,step)
+        end
       end,
       division=divisions[i],
     })
   end
   sequencer:hard_restart()
 
+  params:default()
+
 end
 
-function play_note(col,step)
+function play_note(col,step,force)
   local row=(step-1)%8+1
   local light=grid_.lightsout[row][col]
-  if light>0 then
-    print(row,col)
-    print(scales[row][col])
+  if light>0 or force then
+    print("playing",row,col)
     local freq = MusicUtil.note_num_to_freq(scales[row][col])
     grid_.visual[row][col]=15
     engine.hz(freq)
@@ -101,6 +106,13 @@ end
 
 function cleanup()
 
+end
+
+function grid_note_on(row,col,light)
+  if row ==1 and col==1 then 
+    sequencer_active = light>0
+  end
+  play_note(row,col,true)
 end
 
 function table.reverse(t)
