@@ -61,6 +61,7 @@ function init()
           step=step+1
           play_note(i,step)
         end
+        redraw()
       end,
       division=divisions[i],
     })
@@ -93,8 +94,20 @@ end
 
 function redraw()
   screen.clear()
-  screen.move(32,64)
+  screen.level(15)
+  screen.move(1,10)
   screen.text("lightsout")
+  screen.level(5)
+  screen.move(1,20)
+  screen.text("connect a grid and play!")
+  screen.move(1,30)
+  screen.text("pressing any lights will toggle") 
+  screen.move(1,40)
+  screen.text("  it and adjacent lights.")
+  screen.move(1,50)
+  screen.text("try to turn off all the lights!")
+  screen.move(1,60)
+  screen.text("press top left to play: "..(sequencer_active and "ON" or "OFF"))
 
   screen.update()
 end

@@ -34,6 +34,14 @@ function GGrid:new(args)
     end
   end
 
+  -- initiate a random state of lightsout
+  for i=1,8 do
+    for j=1,m.grid_width do
+      if math.random()>0.9 then
+        m.lightsout[i][j]=1
+      end
+    end
+  end
 
 
   -- keep track of pressed buttons
