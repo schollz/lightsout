@@ -1,4 +1,4 @@
--- lightsout v0.0.0
+-- lightsout v1.0.0
 --
 --
 -- llllllll.co/t/lightsout
